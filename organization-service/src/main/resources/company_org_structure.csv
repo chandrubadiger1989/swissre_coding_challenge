@@ -2,8 +2,11 @@ Id,firstName,lastName,salary,managerId
 123,Joe,Doe,60000000, 
 124,Martin,Chekov,45000,123
 300,Alice,Hasacat,50000,124
-305,Brett,Hardleaf,50000,300
-306,Brett,Hardleaf,30000,305
-307,Brett,Hardleaf,30000,306
-308,Brett,Hardleaf,15001,307
-309,Brett,Hardleaf,10000,308
+305,Brett1,Hardleaf1,40000,300
+306,Brett2,Hardleaf2,30000,305
+307,Brett3,Hardleaf3,30000,306
+308,Brett4,Hardleaf4,15001,307
+309,Brett5,Hardleaf5,10000,308
+310,Brett5,Hardleaf5,10000,309
+311,Brett5,Hardleaf5,5000,310
+312,Brett5,Hardleaf5,2000,311

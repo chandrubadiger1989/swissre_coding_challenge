@@ -61,27 +61,30 @@ public class App
     	enhanceEmployeeData();
     	
     	//Queries
-    	printManagerMoreThanExptSalary();
-    	printManagerLessThanExptSalary();
-    	printEmpsMoreThanExptReports();
+    	//printManagerMoreThanExptSalary();
+    	//printManagerLessThanExptSalary();
+    	//printEmpsMoreThanExptReports();
     }
     
-		private static void printManagerMoreThanExptSalary() {
+	public static List<Employee> printManagerMoreThanExptSalary() {
 		System.out.println("\nManagers having MORE than Expected Salary");
 		for(Employee e: managerMoreThanExptSalary)
 			System.out.println(e.toString());
+		return managerMoreThanExptSalary;
 	}
 
-	private static void printManagerLessThanExptSalary() {
+	public static List<Employee> printManagerLessThanExptSalary() {
 		System.out.println("\nManagers having LESS than Expected Salary");
 		for(Employee e: managerLessThanExptSalary)
 			System.out.println(e.toString());
+		return managerLessThanExptSalary;
 	}
 	
-	private static void printEmpsMoreThanExptReports() {
+	public static List<Employee> printEmpsMoreThanExptReports() {
 		System.out.println("\nEmployees having Lengthier Reporting");
 		for(Employee e: empsMoreThanExptReports)
 			System.out.println(e.toString());
+		return empsMoreThanExptReports;
 	}
 	
 	/**
@@ -89,7 +92,7 @@ public class App
 	 * Captures their salary comparison outcome
 	 * Capture their distances 
 	 */
-	private static void enhanceEmployeeData() {
+	public static void enhanceEmployeeData() {
 		//Initialize distance list, to track how far each employee from CEO
     	Map<Integer, Integer> distanceMap = new HashMap<>();
     	
@@ -135,7 +138,7 @@ public class App
     	}
 	}
 
-	private static void representHiararchy() {
+	public static void representHiararchy() {
     	
     	map = new HashMap<>();
     	empMap = new HashMap<>();
@@ -161,7 +164,7 @@ public class App
 		}	
 	}
 
-	private static void readCSV() {
+	public static void readCSV() {
     	try {
 			FileReader fileReader = new FileReader(config.getCsvPath());
 			CSVReader csvReader = new CSVReader(fileReader);
@@ -178,9 +181,9 @@ public class App
 		}
     }
 	
-	private static void loadConfigs() {
+	public static void loadConfigs() {
 		config = AppConfigLoader.loadConfig();
-		System.out.println("Confguration Verification Point");
+		System.out.println("\nConfiguration Verification Point");
 		System.out.println("CSV Path: "+config.getCsvPath());
 		System.out.println("Allowed Max Percentage for Manager's Salary: "+config.getMaxPrct());
 		System.out.println("Allowed Min Percentage for Manager's Salary: "+config.getMinPrct());

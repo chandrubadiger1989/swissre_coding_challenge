@@ -22,7 +22,7 @@ public class Employee {
 	@CsvBindByName
 	private int managerId;	
 	
-	//To store the list of direct subordintaes details
+	//To store the list of direct subordinates details
 	private List<Employee> subordinates = new ArrayList<>();
 	
 	private double subordinatesAvg;

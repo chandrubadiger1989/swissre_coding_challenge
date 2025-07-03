@@ -1,0 +1,4 @@
+csvPath: D:\Chandru\INTERVIEWS\swiss_re\round_1_offline_coding_challenge\organization-service\src\main\resources\company_org_structure.csv
+minPrct: 20
+maxPrct: 50
+maxReports: 4

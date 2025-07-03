@@ -12,6 +12,8 @@ import java.util.Map;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.swissre.organizationservice.config.AppConfig;
+import com.swissre.organizationservice.config.AppConfigLoader;
 import com.swissre.organizationservice.entity.Employee;
 
 /**
@@ -19,14 +21,8 @@ import com.swissre.organizationservice.entity.Employee;
  */
 public class App 
 {
-	//Configuration: CSV File Path
-	private static final String CONFIG_CSV_PATH = "C:\\Chandru\\Official\\swissre_coding_challenge\\organization-service\\src\\main\\java\\com\\swissre\\organizationservice\\company_org_structure.csv";
-	//Configuration to check if the manager's salary is at least 20% more than average salary of employees. Configuration can be externalized as well, as well as Environmentalized as well.
-	private static final int CONFIG_MIN_PRCT = 20;
-	//configuration to check if the manager's salary is  at most 50% more than average salary of employees
-	private static final int CONFIG_MAX_PRCT = 50;
-	//Configuration to check if the Employee is having more than 4 reportees in between from CEO and employee
-	private static final int CONFIG_MAX_REPORTEES = 4;
+	//Adapter to load the configuration from configuration yaml file
+	private static AppConfig config;
 	
 	//To store the raw data from CSV file
 	private static List<Employee> rawData; 
@@ -52,6 +48,9 @@ public class App
 	//Entry point of the application
     public static void main(String[] args)
     {
+    	//Load the external Configurations
+    	loadConfigs();
+    	
     	//Method to read the csv raw data 
     	readCSV();
     	
@@ -67,7 +66,7 @@ public class App
     	printEmpsMoreThanExptReports();
     }
     
-	private static void printManagerMoreThanExptSalary() {
+		private static void printManagerMoreThanExptSalary() {
 		System.out.println("\nManagers having MORE than Expected Salary");
 		for(Employee e: managerMoreThanExptSalary)
 			System.out.println(e.toString());
@@ -91,7 +90,7 @@ public class App
 	 * Capture their distances 
 	 */
 	private static void enhanceEmployeeData() {
-		//Initialize distance list, to track how far each empooyee from CEO
+		//Initialize distance list, to track how far each employee from CEO
     	Map<Integer, Integer> distanceMap = new HashMap<>();
     	
     	managerMoreThanExptSalary = new ArrayList<>();
@@ -118,7 +117,7 @@ public class App
     				q.add(r);
     				
     				//If the distance of this Employee is already more than expected reporting length, capture and store into final list
-    				if(dist > CONFIG_MAX_REPORTEES)
+    				if(dist > config.getMaxReports())
     					empsMoreThanExptReports.add(empMap.get(r));
     			}
     			
@@ -128,9 +127,9 @@ public class App
     			double curEmpSalary = empMap.get(curEmployee).getSalary();
     			double salaryRatio = (curEmpSalary/avg)*100 - 100; //Percentage difference
     			
-    			if(salaryRatio < CONFIG_MIN_PRCT)
+    			if(salaryRatio < config.getMinPrct())
     				managerLessThanExptSalary.add(empMap.get(curEmployee));
-    			else if(salaryRatio > CONFIG_MAX_PRCT)
+    			else if(salaryRatio > config.getMaxPrct())
     				managerMoreThanExptSalary.add(empMap.get(curEmployee));
     		}
     	}
@@ -164,7 +163,7 @@ public class App
 
 	private static void readCSV() {
     	try {
-			FileReader fileReader = new FileReader(CONFIG_CSV_PATH);
+			FileReader fileReader = new FileReader(config.getCsvPath());
 			CSVReader csvReader = new CSVReader(fileReader);
 			
 			CsvToBean<Employee> csvToBean = new CsvToBeanBuilder<Employee>(csvReader)
@@ -175,7 +174,17 @@ public class App
 			rawData = csvToBean.parse();
 						
 		} catch (FileNotFoundException e) {
-			System.err.println("File Not Found, please check the path and re-execute the application!!");
+			System.err.println("CSV file Not Found, please review/update the config.yaml file and re-execute the application!!");
 		}
     }
+	
+	private static void loadConfigs() {
+		config = AppConfigLoader.loadConfig();
+		System.out.println("Confguration Verification Point");
+		System.out.println("CSV Path: "+config.getCsvPath());
+		System.out.println("Allowed Max Percentage for Manager's Salary: "+config.getMaxPrct());
+		System.out.println("Allowed Min Percentage for Manager's Salary: "+config.getMinPrct());
+		System.out.println("Allowed Max Reports for any Employee :"+config.getMaxReports());
+	}
+
 }

@@ -5,7 +5,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Unit tests for organization-service which aims for improving the Organization Structure
+ * 
  */
 public class AppTest 
     extends TestCase

@@ -61,9 +61,9 @@ public class App
     	enhanceEmployeeData();
     	
     	//Queries
-    	//printManagerMoreThanExptSalary();
-    	//printManagerLessThanExptSalary();
-    	//printEmpsMoreThanExptReports();
+    	printManagerMoreThanExptSalary();
+    	printManagerLessThanExptSalary();
+    	printEmpsMoreThanExptReports();
     }
     
 	public static List<Employee> printManagerMoreThanExptSalary() {
@@ -124,7 +124,7 @@ public class App
     					empsMoreThanExptReports.add(empMap.get(r));
     			}
     			
-    			//Now lets check the Managers's salary in terms of comparision with their reportees average
+    			//Now lets check the Managers's salary in terms of comparison with their reportees average
     			double avg = sumOfReporteesSalary / reportees.size(); //Calculate average of reportees
     			
     			double curEmpSalary = empMap.get(curEmployee).getSalary();
